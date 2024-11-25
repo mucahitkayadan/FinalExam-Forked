@@ -51,9 +51,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponseDto getEmployeeById(Long id) {
+    public Optional<EmployeeResponseDto> getEmployeeById(Long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
-        return employee.map(this::mapToResponseDto).orElse(null);
+        return employee.map(this::mapToResponseDto);
     }
 
     @Override

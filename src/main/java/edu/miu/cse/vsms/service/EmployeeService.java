@@ -5,10 +5,11 @@ import edu.miu.cse.vsms.dto.response.EmployeeResponseDto;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface EmployeeService {
     EmployeeResponseDto addEmployee(EmployeeRequestDto request);
     List<EmployeeResponseDto> getAllEmployees();
-    EmployeeResponseDto getEmployeeById(Long id);
+    Optional<EmployeeResponseDto> getEmployeeById(Long id);
     EmployeeResponseDto partiallyUpdateEmployee(Long id, Map<String, Object> updates);
 }

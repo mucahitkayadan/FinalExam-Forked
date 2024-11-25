@@ -2,8 +2,10 @@ package edu.miu.cse.vsms.controller;
 
 import edu.miu.cse.vsms.dto.request.EmployeeRequestDto;
 import edu.miu.cse.vsms.dto.response.EmployeeResponseDto;
+import edu.miu.cse.vsms.exception.employee.EmployeeNotFoundException;
 import edu.miu.cse.vsms.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,26 +21,28 @@ public class EmployeeController {
 
     // Add a new employee
     @PostMapping
-    public ResponseEntity<EmployeeResponseDto> addEmployee(@RequestBody EmployeeRequestDto request) {
-        // Write your code here
-
-        return null;
+    public ResponseEntity<EmployeeResponseDto> addEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
+        EmployeeResponseDto employeeResponseDto = employeeService.addEmployee(employeeRequestDto);
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(employeeResponseDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     // Get all employees
     @GetMapping
     public ResponseEntity<List<EmployeeResponseDto>> getAllEmployees() {
-        // Write your code here
-
-        return null;
+        List<EmployeeResponseDto> employeeResponseDtos = employeeService.getAllEmployees();
+        return ResponseEntity.status(HttpStatus.OK).body(employeeResponseDtos);
     }
 
     // Get a specific employee by ID
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable Long id) {
-        // Write your code here
-
-        return null;
+        return employeeService.getEmployeeById(id)
+                .map(employee -> ResponseEntity.ok().body(employee))
+                .orElseThrow(() ->  new EmployeeNotFoundException(id.toString()));
     }
 
     // Update partially an existing employee
@@ -47,8 +51,6 @@ public class EmployeeController {
             @PathVariable Long id,
             @RequestBody Map<String, Object> updates
     ) {
-        // Write your code here
-
-        return null;
+        return ResponseEntity.ok(employeeService.partiallyUpdateEmployee(id, updates));
     }
 }
