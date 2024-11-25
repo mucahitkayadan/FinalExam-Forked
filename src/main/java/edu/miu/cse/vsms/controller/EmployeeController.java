@@ -20,7 +20,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     // Add a new employee
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<EmployeeResponseDto> addEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
         EmployeeResponseDto employeeResponseDto = employeeService.addEmployee(employeeRequestDto);
         // This does not return optional so we cannot use if isPresent.
