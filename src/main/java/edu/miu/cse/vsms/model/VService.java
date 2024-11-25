@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class VService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long vServiceId;
 
     private String serviceName;
     private double cost;

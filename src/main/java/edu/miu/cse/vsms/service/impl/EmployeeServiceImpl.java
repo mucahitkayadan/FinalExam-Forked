@@ -109,14 +109,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeResponseDto mapToResponseDto(Employee employee) {
         List<VehicleServiceResponseDto> serviceDtos = employee.getVServices().stream()
                 .map(service -> new VehicleServiceResponseDto(
-                        service.getId(),
+                        service.getVServiceId(),
                         service.getServiceName(),
                         service.getCost(),
                         service.getVehicleType()
                 )).toList();
 
         return new EmployeeResponseDto(
-                employee.getId(),
+                employee.getEmployeeId(),
                 employee.getName(),
                 employee.getEmail(),
                 employee.getPhone(),
