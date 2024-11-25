@@ -23,6 +23,7 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<EmployeeResponseDto> addEmployee(@RequestBody EmployeeRequestDto employeeRequestDto) {
         EmployeeResponseDto employeeResponseDto = employeeService.addEmployee(employeeRequestDto);
+        // This does not return optional so we cannot use if isPresent.
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(employeeResponseDto);
         } catch (Exception e) {
@@ -42,7 +43,7 @@ public class EmployeeController {
     public ResponseEntity<EmployeeResponseDto> getEmployeeById(@PathVariable Long id) {
         return employeeService.getEmployeeById(id)
                 .map(employee -> ResponseEntity.ok().body(employee))
-                .orElseThrow(() ->  new EmployeeNotFoundException(id.toString()));
+                .orElseThrow(() ->  new EmployeeNotFoundException("Error with ID: " + id.toString()));
     }
 
     // Update partially an existing employee
